@@ -4,6 +4,8 @@ const CANVAS_WIDTH = 400;
 // game variables
 const imageWidth = 55;
 const imageHeight = 55;
+// let highestScore = 0;
+// let currentScore = 0;
 // enemies variables
 const numberOfEnemies = 4;
 const yPositionArray = [60, 145, 225];
@@ -14,6 +16,19 @@ const allEnemies = [];
 // player Variables
 const initialPlayerXPosition = 202;
 const initialPlayerYPosition = 405;
+
+//knockout setup
+if (!localStorage.highestScore) {
+  localStorage.setItem("highestScore", 0);
+}
+//knockout ViewModel
+var gameViewModel = {
+    highestScore: ko.observable(localStorage.highestScore),
+    currentScore: ko.observable(0)
+};
+// bind the model
+ko.applyBindings(gameViewModel);
+
 
 // Enemies our player must avoid
 const Enemy = function() {
@@ -98,7 +113,7 @@ Player.prototype.update = function() {
   } else if (player.y < 0) {
     // make sure player doesn't go out of bound
     player.y = 0;
-    // player has won restart the game
+    // player has reached to water, add point and restart the game
     game.restart(player);
   }
 };
@@ -125,16 +140,27 @@ Player.prototype.handleInput = function(key) {
 
 //responsible for reseting and restarting the game
 const game = {
+  // handle the case when player has reached water and add 1 point to score
   restart: (player)=>{
     console.log('Game restart');
-    setTimeout(()=>{
-      player.x = initialPlayerXPosition;
-      player.y = initialPlayerYPosition;
-    }, 500)
+    player.x = initialPlayerXPosition;
+    player.y = initialPlayerYPosition;
+    //update the currentScore, once player reaches river
+    gameViewModel.currentScore(gameViewModel.currentScore() + 1);
   },
-  // resets the player for now
+  // resets the game and set score to zero
   reset: (player)=>{
     console.log('game reset');
+    // if current score is greater than highestScore , set the new score as highest score
+    if(gameViewModel.currentScore() > localStorage.highestScore){
+      // update the localStorage
+      localStorage.highestScore = gameViewModel.currentScore();
+      // update knockout model
+      gameViewModel.highestScore(localStorage.highestScore);
+    }
+    // reset current score
+    gameViewModel.currentScore(0);
+    // reset player position
     player.x = initialPlayerXPosition;
     player.y = initialPlayerYPosition;
   }

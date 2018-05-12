@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <p class="highest-score">Highest Score: <span data-bind="text: gameViewModel.highestScore"></span></p>
+    <p class="current-score">Current Score: <span data-bind="text: gameViewModel.currentScore"></span></p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
