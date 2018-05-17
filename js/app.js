@@ -1,13 +1,11 @@
-"use strict";
-
+/*jshint esversion: 6 */
 const WIDTH = 55;
 const CANVAS_WIDTH = 400;
 
 // game variables
 const imageWidth = 55;
 const imageHeight = 55;
-// let highestScore = 0;
-// let currentScore = 0;
+
 // enemies variables
 const numberOfEnemies = 4;
 const yPositionArray = [60, 145, 225];
@@ -78,7 +76,7 @@ Enemy.prototype.isColliding = (enemy, player) => {
       (player.y + player.height) >= (enemy.y) &&
       (player.y) <= (enemy.y + enemy.height)){
         return true;
-      };
+      }
 };
 
 // If enemy and player touch, then reset player to starting position
@@ -87,7 +85,7 @@ Enemy.prototype.checkCollisions = (enemy, player) => {
     // collison has happened, reset the game
     game.reset(player);
   }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -102,7 +100,7 @@ const Player = function(){
   this.y = initialPlayerYPosition;
   this.height = imageWidth;
   this.width = imageHeight;
-}
+};
 
 Player.prototype.update = function() {
   //check the position of player and do the needful :)
@@ -121,7 +119,7 @@ Player.prototype.update = function() {
 };
 
 Player.prototype.render = function() {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.handleInput = function(key) {
@@ -166,7 +164,7 @@ const game = {
     player.x = initialPlayerXPosition;
     player.y = initialPlayerYPosition;
   }
-}
+};
 
 
 // Now instantiate Enemy and Player objects.
