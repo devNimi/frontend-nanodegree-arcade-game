@@ -1,3 +1,5 @@
+"use strict";
+
 const WIDTH = 55;
 const CANVAS_WIDTH = 400;
 
